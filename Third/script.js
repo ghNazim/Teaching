@@ -57,7 +57,10 @@ const createCard= function(imageSource,text){
     card.appendChild(title)
     card.appendChild(cross)
     gallery.appendChild(card)
-
+    cross.addEventListener("click",(e)=>{
+      const clicked = e.target;
+      clicked.parentElement.remove()
+    })
 }
 
 // createCard(arrayOfImages[0].src,arrayOfImages[0].title)
@@ -71,6 +74,12 @@ console.log(add)
 function addHandler(e){
     const str = search.value
     if(!str) return;
-    createCard(str,"random title")
+    const data = fetch(str)
+    data.then((res)=>{
+      if(!res.ok) return
+      createCard(str, "random title");
+    }).catch(()=>{})
+    
 }
 add.addEventListener("click",addHandler)
+
